@@ -30,32 +30,56 @@
     </properties>
 
     <profiles>
-    <profile>
-        <id>dev</id>
-        <activation>
-            <activeByDefault>true</activeByDefault>
-        </activation>
-        <properties>
-            <jdbc.url><![CDATA[jdbc:mysql://drdsbgga0170b0zo.drds.aliyuncs.com/real_name?allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&useUnicode=true&characterEncoding=utf8&&useSSL=false]]></jdbc.url>
-            <jdbc.username>real_name</jdbc.username>
-            <jdbc.password>Real_name258</jdbc.password>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <jdbc.url><![CDATA[jdbc:mysql://drdsbgga0170b0zo.drds.aliyuncs.com/real_name?allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&useUnicode=true&characterEncoding=utf8&&useSSL=false]]></jdbc.url>
+                <jdbc.username>real_name</jdbc.username>
+                <jdbc.password>Real_name258</jdbc.password>
 
-            <redis.host>r-2ze99c1fc54143b4.redis.rds.aliyuncs.com</redis.host>
-            <redis.password></redis.password>
+                <redis.host>r-2ze99c1fc54143b4.redis.rds.aliyuncs.com</redis.host>
+                <redis.password></redis.password>
 
-            <miniprogram.requestKey>123456789ABCDEFFEDCBA9876543210</miniprogram.requestKey>
-            <miniprogram.appId>wx22d6445e07f198e2</miniprogram.appId>
-            <miniprogram.appSecret>a9b9b7e4f68d42d409cb7c35f564a969</miniprogram.appSecret>
+                <miniprogram.requestKey>123456789ABCDEFFEDCBA9876543210</miniprogram.requestKey>
+                <miniprogram.appId>wx22d6445e07f198e2</miniprogram.appId>
+                <miniprogram.appSecret>a9b9b7e4f68d42d409cb7c35f564a969</miniprogram.appSecret>
 
-            <redis.token.out.time>86400</redis.token.out.time>
+                <redis.token.out.time>86400</redis.token.out.time>
 
-            <real.name.url>http://localhost:8089</real.name.url>
-            <ride.bus.url>http://localhost:5100</ride.bus.url>
+                <real.name.url>http://localhost:8089</real.name.url>
+                <ride.bus.url>http://localhost:5100</ride.bus.url>
 
 
-        </properties>
-    </profile>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <jdbc.url><![CDATA[jdbc:mysql://drdsbgga0170b0zo.drds.aliyuncs.com/real_name?allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&useUnicode=true&characterEncoding=utf8&&useSSL=false]]></jdbc.url>
+                <jdbc.username>real_name</jdbc.username>
+                <jdbc.password>Real_name258</jdbc.password>
 
+                <redis.host>r-2ze99c1fc54143b4.redis.rds.aliyuncs.com</redis.host>
+                <redis.password></redis.password>
+
+                <miniprogram.requestKey>123456789ABCDEFFEDCBA9876543210</miniprogram.requestKey>
+                <miniprogram.appId>wx22d6445e07f198e2</miniprogram.appId>
+                <miniprogram.appSecret>a9b9b7e4f68d42d409cb7c35f564a969</miniprogram.appSecret>
+
+                <redis.token.out.time>86400</redis.token.out.time>
+
+                <real.name.url>http://localhost:8089</real.name.url>
+                <ride.bus.url>http://localhost:5100</ride.bus.url>
+
+
+            </properties>
+        </profile>
     </profiles>
 
     <build>
