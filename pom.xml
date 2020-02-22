@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.0.RELEASE</version>
+    </parent>
+    <groupId>com.tuspass.realname</groupId>
+    <artifactId>real-name</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
+    <modules>
+        <module>web</module>
+        <module>server</module>
+        <module>common</module>
+    </modules>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <base.package>com.tuspass.realname</base.package>
+        <mysql.version>5.1.44</mysql.version>
+        <mybatis.version>3.4.6</mybatis.version>
+        <tk.mybatis.version>4.0.4</tk.mybatis.version>
+        <mapper-spring-boot-starter.version>2.0.4</mapper-spring-boot-starter.version>
+        <pagehelper-spring-boot-starter.version>1.2.9</pagehelper-spring-boot-starter.version>
+    </properties>
+
+    <profiles>
+    <profile>
+        <id>dev</id>
+        <activation>
+            <activeByDefault>true</activeByDefault>
+        </activation>
+        <properties>
+            <jdbc.url><![CDATA[jdbc:mysql://drdsbgga0170b0zo.drds.aliyuncs.com/real_name?allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&useUnicode=true&characterEncoding=utf8&&useSSL=false]]></jdbc.url>
+            <jdbc.username>real_name</jdbc.username>
+            <jdbc.password>Real_name258</jdbc.password>
+
+            <redis.host>r-2ze99c1fc54143b4.redis.rds.aliyuncs.com</redis.host>
+            <redis.password></redis.password>
+
+            <miniprogram.requestKey>123456789ABCDEFFEDCBA9876543210</miniprogram.requestKey>
+            <miniprogram.appId>wx22d6445e07f198e2</miniprogram.appId>
+            <miniprogram.appSecret>a9b9b7e4f68d42d409cb7c35f564a969</miniprogram.appSecret>
+
+            <redis.token.out.time>86400</redis.token.out.time>
+
+            <real.name.url>http://localhost:8089</real.name.url>
+            <ride.bus.url>http://localhost:5100</ride.bus.url>
+
+
+        </properties>
+    </profile>
+
+    </profiles>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

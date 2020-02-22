@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property name="log.dir" value="./logs"/>
+    <property name="log.name" value="app"/>
+    <property name="log.base.package" value="com.tuspass"/>
+    <property name="log.isAppendToFile" value="true"/>
+    <property name="log.level.console" value="all"/>
+    <property name="rolling.pattern" value="%d{yyyy-MM-dd}"/>
+    <property name="layout.pattern" value="%-5p %d [%t] %c{50} > %m%n"/>
+    <property resource="application.properties"/>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${layout.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <if condition='property("log.isAppendToFile").contains("true")'>
+        <then>
+            <appender name="rolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <layout class="ch.qos.logback.classic.PatternLayout">
+                    <pattern>${layout.pattern}</pattern>
+                </layout>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <FileNamePattern>${log.dir}/${log.name}.log.${rolling.pattern}</FileNamePattern>
+                </rollingPolicy>
+            </appender>
+
+            <appender name="rolling-info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <layout class="ch.qos.logback.classic.PatternLayout">
+                    <pattern>${layout.pattern}</pattern>
+                </layout>
+                <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                    <level>info</level>
+                </filter>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <FileNamePattern>${log.dir}/info/${log.name}-info.log.${rolling.pattern}</FileNamePattern>
+                </rollingPolicy>
+            </appender>
+
+            <appender name="rolling-warn" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <layout class="ch.qos.logback.classic.PatternLayout">
+                    <pattern>${layout.pattern}</pattern>
+                </layout>
+                <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                    <level>warn</level>
+                </filter>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <FileNamePattern>${log.dir}/warn/${log.name}-warn.log.${rolling.pattern}</FileNamePattern>
+                </rollingPolicy>
+            </appender>
+
+            <appender name="rolling-error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <layout class="ch.qos.logback.classic.PatternLayout">
+                    <pattern>${layout.pattern}</pattern>
+                </layout>
+                <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                    <level>error</level>
+                </filter>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <FileNamePattern>${log.dir}/error/${log.name}-error.log.${rolling.pattern}</FileNamePattern>
+                </rollingPolicy>
+            </appender>
+        </then>
+    </if>
+
+    <root level="info">
+        <appender-ref ref="console" level="${log.level.console}"/>
+        <if condition='property("log.isAppendToFile").contains("true")'>
+            <then>
+                <appender-ref ref="rolling"/>
+                <appender-ref ref="rolling-info"/>
+                <appender-ref ref="rolling-warn"/>
+                <appender-ref ref="rolling-error"/>
+            </then>
+        </if>
+    </root>
+
+    <logger name="${log.base.package}" level="debug"/>
+
+</configuration>

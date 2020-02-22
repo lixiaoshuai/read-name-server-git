@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property name="log.dir" value="./logs"/>
+    <property name="log.name" value="app"/>
+    <property name="log.base.package" value="com.tuspass"/>
+    <property name="log.isAppendToFile" value="true"/>
+    <property name="log.level.console" value="all"/>
+    <property name="rolling.pattern" value="%d{yyyy-MM-dd}"/>
+    <property name="layout.pattern" value="%-5p %d [%t] %c{50} > %m%n"/>
+    <property resource="application.properties"/>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${layout.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <if condition='property("log.isAppendToFile").contains("true")'>
+        <then>
+            <appender name="rolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <layout class="ch.qos.logback.classic.PatternLayout">
+                    <pattern>${layout.pattern}</pattern>
+                </layout>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <FileNamePattern>${log.dir}/${log.name}.log.${rolling.pattern}</FileNamePattern>
+                </rollingPolicy>
+            </appender>
+
+            <appender name="rolling-warn" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <layout class="ch.qos.logback.classic.PatternLayout">
+                    <pattern>${layout.pattern}</pattern>
+                </layout>
+                <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                    <level>warn</level>
+                </filter>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <FileNamePattern>${log.dir}/warn/${log.name}-warn.log.${rolling.pattern}</FileNamePattern>
+                </rollingPolicy>
+            </appender>
+
+            <appender name="rolling-error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <layout class="ch.qos.logback.classic.PatternLayout">
+                    <pattern>${layout.pattern}</pattern>
+                </layout>
+                <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                    <level>error</level>
+                </filter>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <FileNamePattern>${log.dir}/error/${log.name}-error.log.${rolling.pattern}</FileNamePattern>
+                </rollingPolicy>
+            </appender>
+
+            <appender name="rolling-mybatis" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <layout class="ch.qos.logback.classic.PatternLayout">
+                    <pattern>${layout.pattern}</pattern>
+                </layout>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <FileNamePattern>${log.dir}/mybatis/${log.name}-mybatis.log.${rolling.pattern}</FileNamePattern>
+                </rollingPolicy>
+            </appender>
+
+            <appender name="rolling-device-monitor" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <layout class="ch.qos.logback.classic.PatternLayout">
+                    <pattern>${layout.pattern}</pattern>
+                </layout>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <FileNamePattern>${log.dir}/device-monitor/${log.name}-device-monitor.log.${rolling.pattern}</FileNamePattern>
+                </rollingPolicy>
+            </appender>
+        </then>
+    </if>
+
+    <root level="info">
+        <appender-ref ref="console" level="${log.level.console}"/>
+        <if condition='property("log.isAppendToFile").contains("true")'>
+            <then>
+                <appender-ref ref="rolling"/>
+                <appender-ref ref="rolling-warn"/>
+                <appender-ref ref="rolling-error"/>
+            </then>
+        </if>
+    </root>
+
+    <logger name="${log.base.package}" level="debug"/>
+    <logger name="${log.base.package}.repository.mapper" level="debug">
+        <if condition='property("log.isAppendToFile").contains("true")'>
+            <then>
+                <appender-ref ref="rolling-mybatis"/>
+            </then>
+        </if>
+    </logger>
+    <logger name="iot.device.monitor.rpc" level="info" additivity="false">
+        <if condition='property("log.isAppendToFile").contains("true")'>
+            <then>
+                <appender-ref ref="rolling-device-monitor"/>
+            </then>
+        </if>
+    </logger>
+    <logger name="com.tuspass.iotdevice.device.repository.mapper.DeviceMapper.selectByExample" level="off"/>
+    <logger name="com.tuspass.iotdevice.device.repository.mapper.DeviceMapper.selectOneByExample" level="off"/>
+    <logger name="com.tuspass.iotdevice.device.repository.mapper.DeviceMapper.updateByExampleSelective" level="off"/>
+    <logger name="com.tuspass.iotdevice.device.repository.mapper.DeviceMapper.updateByPrimaryKeySelective" level="off"/>
+    <logger name="com.tuspass.iotdevice.device.repository.mapper.TaskMapper.select" level="off"/>
+    <logger name="com.tuspass.iotdevice.device.repository.mapper.TaskMapper.selectTaskFinish" level="off"/>
+    <logger name="com.tuspass.iotdevice.device.repository.mapper.TaskDeviceMapper.batchCreate" level="off"/>
+    <logger name="com.tuspass.iotdevice.device.repository.mapper.AlarmDetailMapper.insert" level="off"/>
+    <logger name="com.tuspass.iotdevice.device.repository.mapper.TaskDeviceMapper.staticsticNum" level="off"/>
+    <logger name="com.tuspass.iotdevice.device.repository.mapper.DeviceHeartbeatMapper.updateByPrimaryKeySelective" level="off"/>
+    <logger name="com.tuspass.iotdevice.device.repository.mapper.DeviceMapper.queryDeviceName" level="off"/>
+    <logger name="com.tuspass.iotdevice.device.repository.mapper.DeviceStsTokenMapper.updateByPrimaryKey" level="off"/>
+    <logger name="com.tuspass.iotdevice.device.repository.mapper.TaskDeviceTempMapper.selectPerformTask" level="off"/>
+    <logger name="com.tuspass.iotdevice.device.repository.mapper.DeviceModelMapper" level="off"/>
+    <logger name="com.tuspass.iotdevice.device.repository.mapper.DeviceTypeMapper" level="off"/>
+    <logger name="com.tuspass.iotdevice.device.repository.mapper.DeviceMapper.selectOne" level="off"/>
+    <logger name="com.tuspass.iotdevice.device.repository.mapper.TaskMapper.selectTaskNotStart" level="off"/>
+
+</configuration>
